@@ -8,4 +8,5 @@ This repository was created by Oliver Fife on 2/2/2026 for the purpose of giving
 ## Usage
  - main.py | Entry point. Ideal location to visualize n-cards, calculate n-cards, and apply object methods.
  - card.py | Program of central object Card(). Other methods could be made.
- - global_variables.py | Parameters and initialization. 
+ - global_variables.py | Parameters and initialization.
+ - textual_data | A sample calculation of n-cards for all integers n from 1 to 20 (when possible). 
