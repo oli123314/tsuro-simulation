@@ -38,6 +38,52 @@ class Card:
                 self.weight_spots.append([(sd / 2) + (0.90 * rad * m.sin(theta + dth)),
                                           (sd / 2) - (0.90 * rad * m.cos(theta + dth))])
 
+    def tsuro(self):
+        tsuro = True
+        found_weights = []
+        for edge in self.edges:
+            weight = self.n - abs((edge[1] - edge[0]) - self.n)
+            if weight in found_weights:
+                tsuro = False
+                break
+            else:
+                found_weights.append(weight)
+        return tsuro
+
+    def add_conjecture_edges(self):
+        if self.n % 4 == 0 and self.n > 4:
+            card = self
+            card.edges = [[1, card.n + 1]]
+            for i in range(int(card.n / 2) - 1):
+                card.edges.append([2 + i, (2 * card.n) - i])
+            card.edges.append([(int(card.n / 2) + 1), card.n])
+            for i in range(int(card.n / 4)):
+                card.edges.append([int((3 / 2) * card.n + 1 - i), int((1 / 2) * card.n + 2 + i)])
+            for i in range(int((card.n / 4) - 2)):
+                m = ((3 / 4) * card.n) + 2
+                card.edges.append([int(m + i), int(m + (card.n / 2) - 3 - i)])
+            card.edges.append([int((5 / 4) * card.n), int(((5 / 4) * card.n) + 1)])
+            for edge in card.edges:
+                edge.sort()
+            card.calculate_weight_spots()
+        elif self.n % 4 == 1 and self.n > 5:
+            card = self
+            card.edges = [[1, card.n + 1]]
+            for i in range(int((card.n-1) / 2)):
+                card.edges.append([2 + i, (2 * card.n) - i])
+            card.edges.append([(int((card.n-1) / 2)+2), card.n])
+            for i in range(int((card.n-1) / 4)):
+                card.edges.append([int((3 / 2) * (card.n-1) + 2 - i), int((1 / 2) * (card.n-1) + 3 + i)])
+            for i in range(int(((card.n-1) / 4) - 2)):
+                m = ((3 / 4) * card.n) + 2
+                card.edges.append([int(m + i)+1, int(m + (card.n / 2) - 3 - i)])
+            card.edges.append([int((5 / 4) * (card.n-1))+1, int(((5 / 4) * (card.n-1)+2))])
+            for edge in card.edges:
+                edge.sort()
+            card.calculate_weight_spots()
+        else:
+            print(f"conjecture does not apply to n={self.n}, because {self.n}%4!=0,1")
+
     def display(self):
         pygame.draw.circle(screen, "gray", (sd/2, sd/2), sd*size/2)
         pygame.draw.circle(screen, bg_color, (sd / 2, sd / 2), (sd*size/2)-thk)
